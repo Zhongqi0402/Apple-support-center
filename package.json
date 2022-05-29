@@ -1,0 +1,13 @@
+{
+  "name": "apple-support-desk",
+  "version": "1.0.0",
+  "description": "A support center for users to submit tickets for their demaged apple products",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node backend/server.js"
+
+  },
+  "author": "Matthew Yue",
+  "license": "MIT"
+}

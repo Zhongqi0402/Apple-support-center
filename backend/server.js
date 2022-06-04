@@ -4,7 +4,7 @@ const {errorHandler} = require("./middleware/errorMiddleware")
 const PORT = process.env.PORT || 8000
 const colors = require("colors")
 const connectDB = require('./config/db')
-
+const path = require('path')
 // connect to database
 connectDB()
 

@@ -3,10 +3,13 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Header from './components/Header'
+// import Footer from './components/Footer'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import NewTicket from './pages/NewTicket'
 import PrivateRoute from './components/PrivateRoute'
+import AdminRoute from './components/AdminRoute'
+import AdminTicket from './components/AdminTicket'
 import Tickets from './pages/Tickets'
 import Ticket from './pages/Ticket'
 
@@ -31,10 +34,17 @@ function App() {
               <Route path='/ticket/:ticketId' element={<PrivateRoute />}>
                 <Route path='/ticket/:ticketId' element={<Ticket />} />
               </Route>
+              <Route path='/admin/tickets' element={<AdminRoute />}>
+                <Route path='/admin/tickets' element={<Tickets />} />
+              </Route>
+              <Route path='/admin/ticket/:ticketId' element={<AdminRoute />}>
+                <Route path='/admin/ticket/:ticketId' element={<AdminTicket />} />
+              </Route>
             </Routes>
           </div>
       </Router>
       <ToastContainer />
+      {/* <Footer /> */}
     </>
   );
 }

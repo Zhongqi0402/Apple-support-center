@@ -1,20 +1,27 @@
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { FaQuestionCircle, FaTicketAlt } from 'react-icons/fa'
 
 function Home() {
+  const { user } = useSelector( ( state ) => state.auth )
+
+  let message = user && user.isAdmin ? "View All Tickets" : 'View My Tickets'
+
+
   return (
     <>
-      <section className='heading'>
+      {!user || !user.isAdmin ? <section className='heading'>
         <h1>What do you need help with?</h1>
         <p>Please choose from an option below</p>
-      </section>
+      </section> :
+      <h1>Move your ass and help your customers</h1>}
 
-      <Link to='/new-ticket' className='btn btn-reverse btn-block'>
+      {!user || !user.isAdmin && <Link to='/new-ticket' className='btn btn-reverse btn-block'>
         <FaQuestionCircle /> Create New Ticket
-      </Link>
+      </Link>}
 
       <Link to='/tickets' className='btn btn-block'>
-        <FaTicketAlt /> View My Tickets
+        <FaTicketAlt /> { message }
       </Link>
     </>
   )

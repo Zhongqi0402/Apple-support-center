@@ -90,6 +90,45 @@ export const closeTicket = createAsyncThunk(
   }
 )
 
+// Get all user tickets
+export const getAllTickets = createAsyncThunk(
+  '/admin/tickets',
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await ticketService.getAllTickets( token )
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+export const adminGetTicket = createAsyncThunk(
+  'admin/tickets/get',
+  async (ticketId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await ticketService.adminGetTicket(ticketId, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 export const ticketSlice = createSlice({
   name: 'ticket',
   initialState,
@@ -143,6 +182,32 @@ export const ticketSlice = createSlice({
             ? (ticket.status = 'closed')
             : ticket
         )
+      })
+      .addCase(getAllTickets.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getAllTickets.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.tickets = action.payload
+      })
+      .addCase(getAllTickets.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(adminGetTicket.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(adminGetTicket.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.ticket = action.payload
+      })
+      .addCase(adminGetTicket.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
       })
   },
 })

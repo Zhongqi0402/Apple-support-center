@@ -15,6 +15,11 @@ const getNotes = async (ticketId, token) => {
   return response.data
 }
 
+// Get ticket notes
+const updateNotes = ( newNote ) => {
+    return newNote;
+}
+
 // Create ticket note
 const createNote = async (noteText, ticketId, token) => {
   const config = {
@@ -37,6 +42,7 @@ const createNote = async (noteText, ticketId, token) => {
 const noteService = {
   getNotes,
   createNote,
+  updateNotes
 }
 
 export default noteService

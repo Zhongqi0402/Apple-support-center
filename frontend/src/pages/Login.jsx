@@ -23,6 +23,8 @@ function Login() {
     (state) => state.auth
   )
 
+
+
   useEffect(() => {
     if (isError) {
       toast.error(message)
@@ -30,7 +32,11 @@ function Login() {
 
     // Redirect when logged in
     if (isSuccess || user) {
-      navigate('/')
+      if ( user.isAdmin ) {
+        navigate('/admin/tickets')
+      } else {
+        navigate('/')
+      }
     }
 
     dispatch(reset())

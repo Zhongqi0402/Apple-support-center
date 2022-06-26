@@ -29,6 +29,25 @@ export const getNotes = createAsyncThunk(
   }
 )
 
+// Update ticket notes
+export const updateNotes = createAsyncThunk(
+  'notes/update',
+  async (newNote, thunkAPI) => {
+    try {
+      return noteService.updateNotes( newNote )
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 // Create ticket note
 export const createNote = createAsyncThunk(
   'notes/create',
@@ -66,6 +85,19 @@ export const noteSlice = createSlice({
         state.notes = action.payload
       })
       .addCase(getNotes.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(updateNotes.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(updateNotes.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.notes = [ ...state.notes, action.payload ]
+      })
+      .addCase(updateNotes.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

@@ -16,6 +16,7 @@ app.use(express.urlencoded({extended: false}))
 // Routes
 app.use('/api/users', require('./routes/userRoutes'))
 app.use('/api/tickets', require('./routes/ticketRoutes'))
+app.use('/api/admin', require('./routes/adminRoutes'))
 
 // Serve Frontend
 if (process.env.NODE_ENV === 'production') {
@@ -33,4 +34,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(errorHandler)
-app.listen(PORT, () => {console.log(`started on ${PORT}`)})
+const server = app.listen(PORT, () => {console.log(`started on ${PORT}`)})
+const io = require('./socket').init( server );
+io.on('connection', socket => {
+    console.log('Client connected');
+});

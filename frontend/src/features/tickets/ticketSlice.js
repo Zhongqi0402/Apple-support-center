@@ -3,7 +3,7 @@ import ticketService from './ticketService'
 
 const initialState = {
   tickets: [],
-  ticket: { },
+  ticket: {},
   isError: false,
   isSuccess: false,
   isLoading: false,

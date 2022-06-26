@@ -74,7 +74,7 @@ const createTicket = asyncHandler(async (req, res) => {
       user: req.user.id,
       status: 'new',
     })
-    
+
     res.status(201).json(ticket)
 
 })

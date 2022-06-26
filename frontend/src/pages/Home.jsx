@@ -16,11 +16,11 @@ function Home() {
       </section> :
       <h1>Move your ass and help your customers</h1>}
 
-      {!user || !user.isAdmin && <Link to='/new-ticket' className='btn btn-reverse btn-block'>
+      {( user && !user.isAdmin ) && <Link to='/new-ticket' className='btn btn-reverse btn-block'>
         <FaQuestionCircle /> Create New Ticket
       </Link>}
 
-      <Link to='/tickets' className='btn btn-block'>
+      <Link to={user && user.isAdmin ? '/admin/tickets' : '/tickets'} className='btn btn-block'>
         <FaTicketAlt /> { message }
       </Link>
     </>

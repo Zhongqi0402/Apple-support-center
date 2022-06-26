@@ -3,7 +3,6 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Header from './components/Header'
-// import Footer from './components/Footer'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import NewTicket from './pages/NewTicket'
@@ -44,7 +43,6 @@ function App() {
           </div>
       </Router>
       <ToastContainer />
-      {/* <Footer /> */}
     </>
   );
 }

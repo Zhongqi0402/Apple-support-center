@@ -35,7 +35,6 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use(errorHandler)
 const server = app.listen(PORT, () => {console.log(`started on ${PORT}`)})
-console.log( server );
 const io = require('./socket').init( server );
 io.on('connection', socket => {
     console.log('Client connected');

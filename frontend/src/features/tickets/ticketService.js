@@ -67,7 +67,6 @@ const getAllTickets = async (token) => {
   }
 
   const response = await axios.get( '/api/admin/tickets', config )
-  // console.log( response.data )
   return response.data
 }
 
@@ -78,7 +77,6 @@ const adminGetTicket = async (ticketId, token) => {
     },
   }
   const response = await axios.get( '/api/admin/ticket/' + ticketId, config )
-  // console.log( response.data )
   return response.data
 }
 

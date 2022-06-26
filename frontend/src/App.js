@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import NewTicket from './pages/NewTicket'
 import PrivateRoute from './components/PrivateRoute'
 import AdminRoute from './components/AdminRoute'
-import AdminTicket from './components/AdminTicket'
+import AdminTicket from './pages/AdminTicket'
 import Tickets from './pages/Tickets'
 import Ticket from './pages/Ticket'
 

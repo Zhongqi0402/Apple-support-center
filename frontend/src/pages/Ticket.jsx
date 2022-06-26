@@ -12,8 +12,10 @@ import {
   getNotes,
   createNote,
   reset as notesReset,
+  updateNotes
 } from '../features/notes/noteSlice'
 import NoteItem from '../components/NoteItem'
+import openSocket from 'socket.io-client';
 
 const customStyles = {
   content: {
@@ -45,6 +47,17 @@ function Ticket() {
   const dispatch = useDispatch()
   const { ticketId } = useParams()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const newSocket = openSocket('/');
+    const handler = data => {
+      if (data.action === 'add-note' && (ticketId === data.data.ticket.toString()) ) {
+        dispatch(updateNotes( data.data ))
+      } 
+    };
+    newSocket.on( 'posts', handler )
+    return () => newSocket.off( 'posts', handler )
+  }, []);
 
   useEffect(() => {
     if (isError) {

@@ -5,15 +5,17 @@ import Modal from 'react-modal'
 import { FaPlus } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { adminGetTicket } from '../features/tickets/ticketSlice'
-import BackButton from './BackButton'
+import BackButton from '../components/BackButton'
 import { useParams } from 'react-router-dom'
-import Spinner from './Spinner'
+import Spinner from '../components/Spinner'
 import {
   getNotes,
   createNote,
+  updateNotes,
   // reset as notesReset,
 } from '../features/notes/noteSlice'
-import NoteItem from './NoteItem'
+import NoteItem from '../components/NoteItem'
+import openSocket from 'socket.io-client'
 
 const customStyles = {
   content: {
@@ -43,6 +45,19 @@ function Ticket() {
 
   const dispatch = useDispatch()
   const { ticketId } = useParams()
+
+
+  useEffect(() => {
+    const newSocket = openSocket('/');
+    const handler = data => {
+      if (data.action === 'add-note' && (ticketId === data.data.ticket.toString()) ) {
+        dispatch(updateNotes( data.data ))
+      } 
+    };
+    newSocket.on( 'posts', handler )
+    return () => newSocket.off( 'posts', handler )
+  }, []);
+
 
   useEffect(() => {
     if (isError) {

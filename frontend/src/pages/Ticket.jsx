@@ -42,6 +42,7 @@ function Ticket() {
   const { notes, isLoading: notesIsLoading } = useSelector(
     (state) => state.notes
   )
+  const { user } = useSelector( ( state ) => state.auth )
 
   const params = useParams()
   const dispatch = useDispatch()
@@ -51,7 +52,9 @@ function Ticket() {
   useEffect(() => {
     const newSocket = openSocket('/');
     const handler = data => {
-      if (data.action === 'add-note' && (ticketId === data.data.ticket.toString()) ) {
+      if (data.action === 'add-note' 
+        && (ticketId === data.data.ticket.toString()) 
+        && ( data.data.user._id.toString() !== user._id.toString() ) ) {
         dispatch(updateNotes( data.data ))
       } 
     };

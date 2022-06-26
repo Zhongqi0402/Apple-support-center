@@ -42,6 +42,7 @@ function Ticket() {
   const { notes, isLoading: notesIsLoading } = useSelector(
     (state) => state.notes
   )
+  const { user } = useSelector( ( state ) => state.auth )
 
   const dispatch = useDispatch()
   const { ticketId } = useParams()
@@ -50,7 +51,13 @@ function Ticket() {
   useEffect(() => {
     const newSocket = openSocket('/');
     const handler = data => {
-      if (data.action === 'add-note' && (ticketId === data.data.ticket.toString()) ) {
+      // console.log( data.data.user._id.toString() )
+      // console.log( user._id.toString() )
+      if (data.action === 'add-note' && 
+          (ticketId === data.data.ticket.toString()) && 
+          ( data.data.user._id.toString() !== user._id.toString() ) ) {
+        // if data is sent from current user, do nothing
+        // data.data.user compare to current user -> state.
         dispatch(updateNotes( data.data ))
       } 
     };
